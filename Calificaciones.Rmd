@@ -1,0 +1,271 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
+
+```{r}
+#Importar todos los excel de datos
+library(dplyr)
+library(openxlsx)
+Archivos <- list.files(path = "C:/Users/aleja/Documents/EjemploCalificaciones/DatosKardex2022", pattern = ".xlsx", full.names = TRUE)
+
+Lista <- lapply(Archivos, function(Nombre) read.xlsx(Nombre))
+names(Lista) <- Archivos
+data <- bind_rows(Lista)
+```
+
+```{r}
+#Modificando datos de los semestres
+distinct(select(data, semestre))
+#Modificar 20209 por 20213
+data <- mutate(data, semestre = ifelse(substr(semestre, start = 1, stop = 5)== "20209", "20203", semestre))
+#Modificar 20219 por 20213
+data <- mutate(data, semestre = ifelse(substr(semestre, start = 1, stop = 5)== "20219", "20213", semestre))
+
+distinct(select(data, tipocurso))
+#Quitar espacios
+data <- mutate(data, tipocurso = gsub(" ","",tipocurso))
+
+#Modificar Ordinario por Curso Ordinario
+data <- mutate(data, tipocurso = ifelse(substr(tipocurso, start = 1, stop = 9)== "Ordinario", "Curso Ordinario", tipocurso))
+distinct(select(data, tipocurso))
+
+#Modificar Ordinario por Curso Ordinario
+data <- mutate(data, tipocurso = ifelse(substr(tipocurso, start = 1, stop = 10)== "Ordinariol", "Curso Ordinario", tipocurso))
+distinct(select(data, tipocurso))
+
+#Modificar Ordinario por Curso Ordinario
+data <- mutate(data, tipocurso = ifelse(substr(tipocurso, start = 1, stop = 20)== "CursoOrdinario", "Curso Ordinario", tipocurso))
+distinct(select(data, tipocurso))
+
+#Modificar cursonormal por Curso Ordinario
+data <- mutate(data, tipocurso = ifelse(substr(tipocurso, start = 1, stop = 20)== "cursonormal", "Curso Ordinario", tipocurso))
+distinct(select(data, tipocurso))
+
+#Modificar normal por Curso Ordinario
+data <- mutate(data, tipocurso = ifelse(substr(tipocurso, start = 1, stop = 20)== "normal", "Curso Ordinario", tipocurso))
+distinct(select(data, tipocurso))
+
+#Modificar normal por Curso Ordinario
+data <- mutate(data, tipocurso = ifelse(substr(tipocurso, start = 1, stop = 20)== "Normal", "Curso Ordinario", tipocurso))
+distinct(select(data, tipocurso))
+
+#Modificar normal por Curso Ordinario
+data <- mutate(data, tipocurso = ifelse(substr(tipocurso, start = 1, stop = 20)== "CursoNormal", "Curso Ordinario", tipocurso))
+distinct(select(data, tipocurso))
+
+#Modificar Cursonormal por Curso Ordinario
+data <- mutate(data, tipocurso = ifelse(substr(tipocurso, start = 1, stop = 20)== "Cursonormal", "Curso Ordinario", tipocurso))
+distinct(select(data, tipocurso))
+
+#Modificar NORMAL por Curso Ordinario
+data <- mutate(data, tipocurso = ifelse(substr(tipocurso, start = 1, stop = 20)== "NORMAL", "Curso Ordinario", tipocurso))
+
+#Modificar CURSOORDINARIO por Curso Ordinario
+data <- mutate(data, tipocurso = ifelse(substr(tipocurso, start = 1, stop = 20)== "CURSOORDINARIO", "Curso Ordinario", tipocurso))
+
+#Modificar EvaluacionOrdinaria por Curso Ordinario
+data <- mutate(data, tipocurso = ifelse(substr(tipocurso, start = 1, stop = 20)== "EvaluacionOrdinaria", "Curso Ordinario", tipocurso))
+
+#Modificar EvaluacionOrdinaria por Curso Ordinario
+data <- mutate(data, tipocurso = ifelse(substr(tipocurso, start = 1, stop = 20)== "Cursoordinario", "Curso Ordinario", tipocurso))
+
+#Modificar REPETICION por Curso Repeticion
+data <- mutate(data, tipocurso = ifelse(substr(tipocurso, start = 1, stop = 30)== "REPETICION", "Curso Repeticion", tipocurso))
+
+#Modificar REPETICION por Curso Repeticion
+data <- mutate(data, tipocurso = ifelse(substr(tipocurso, start = 1, stop = 30)== "Recurso", "Curso Repeticion", tipocurso))
+distinct(select(data, tipocurso))
+
+#Modificar REPETICION por Curso Repeticion
+data <- mutate(data, tipocurso = ifelse(substr(tipocurso, start = 1, stop = 30)== "repeticion", "Curso Repeticion", tipocurso))
+
+#Modificar REPETICION por Curso Repeticion
+data <- mutate(data, tipocurso = ifelse(substr(tipocurso, start = 1, stop = 30)== "RepeticionOrdinaria", "Curso Repeticion", tipocurso))
+distinct(select(data, tipocurso))
+
+#Modificar REPETICION por Curso Repeticion
+data <- mutate(data, tipocurso = ifelse(substr(tipocurso, start = 1, stop = 30)== "CursoRepeticion", "Curso Repeticion", tipocurso))
+
+#Modificar REPETICION por Curso Repeticion
+data <- mutate(data, tipocurso = ifelse(substr(tipocurso, start = 1, stop = 30)== "recurso", "Curso Repeticion", tipocurso))
+
+#Modificar REPETICION por Curso Repeticion
+data <- mutate(data, tipocurso = ifelse(substr(tipocurso, start = 1, stop = 30)== "Repetición", "Curso Repeticion", tipocurso))
+
+#Modificar REPETICION por Curso Repeticion
+data <- mutate(data, tipocurso = ifelse(substr(tipocurso, start = 1, stop = 30)== "RepeticiónOrdinaria", "Curso Repeticion", tipocurso))
+
+#Modificar REPETICION por Curso Repeticion
+data <- mutate(data, tipocurso = ifelse(substr(tipocurso, start = 1, stop = 30)== "CursoRecurso", "Curso Repeticion", tipocurso))
+
+#Modificar REPETICION por Curso Repeticion
+data <- mutate(data, tipocurso = ifelse(substr(tipocurso, start = 1, stop = 30)== "Cursoenrepeticion", "Curso Repeticion", tipocurso))
+
+#Modificar REPETICION por Curso Repeticion
+data <- mutate(data, tipocurso = ifelse(substr(tipocurso, start = 1, stop = 30)== "Recursamiento", "Curso Repeticion", tipocurso))
+
+#Modificar REPETICION por Curso Repeticion
+data <- mutate(data, tipocurso = ifelse(substr(tipocurso, start = 1, stop = 30)== "Cursorepeticion", "Curso Repeticion", tipocurso))
+
+#Modificar REPETICION por Curso Repeticion
+data <- mutate(data, tipocurso = ifelse(substr(tipocurso, start = 1, stop = 30)== "Repeticion", "Curso Repeticion", tipocurso))
+
+#Modificar cursoespecial por Curso Especial
+data <- mutate(data, tipocurso = ifelse(substr(tipocurso, start = 1, stop = 30)== "cursoespecial", "Curso Especial", tipocurso))
+
+#Modificar cursoespecial por Curso Especial
+data <- mutate(data, tipocurso = ifelse(substr(tipocurso, start = 1, stop = 30)== "Cursoespecial", "Curso Especial", tipocurso))
+
+#Modificar cursoespecial por Curso Especial
+data <- mutate(data, tipocurso = ifelse(substr(tipocurso, start = 1, stop = 30)== "Especial", "Curso Especial", tipocurso))
+
+#Modificar EvaluacionComplementaria por Curso Ordinario
+data <- mutate(data, tipocurso = ifelse(substr(tipocurso, start = 1, stop = 30)== "EvaluacionComplementaria", "Curso Ordinario", tipocurso))
+
+#Modificar EvaluacionComplementaria por Curso Ordinario
+data <- mutate(data, tipocurso = ifelse(substr(tipocurso, start = 1, stop = 30)== "CURSOCOMPLEMENTARIA", "Curso Repeticion", tipocurso))
+
+#Converitr a Mayusuculas tipo curso
+data <- mutate(data, tipocurso = toupper(tipocurso))
+
+#Modificar EvaluacionComplementaria por Curso Ordinario
+data <- mutate(data, tipocurso = ifelse(substr(tipocurso, start = 1, stop = 30)== "CURSORECURSO", "CURSO REPETICION", tipocurso))
+
+
+distinct(select(data, tipocurso))
+```
+
+```{r}
+#Quitar espacios
+data <- mutate(data, tipocalificacion = gsub(" ","",tipocalificacion))
+#Converitr a Mayusuculas tipocalificacion
+data <- mutate(data, tipocalificacion = toupper(tipocalificacion))
+
+#Modificar EVALUACIONORDINARIA por EVALUACION ORDINARIA
+data <- mutate(data, tipocalificacion = ifelse(substr(tipocalificacion, start = 1, stop = 30)== "EVALUACIONORDINARIA", "EVALUACION ORDINARIA", tipocalificacion))
+data <- mutate(data, tipocalificacion = ifelse(substr(tipocalificacion, start = 1, stop = 30)== "EVALUACIÓNORDINARIA", "EVALUACION ORDINARIA", tipocalificacion))
+data <- mutate(data, tipocalificacion = ifelse(substr(tipocalificacion, start = 1, stop = 30)== "ORDINARIA", "EVALUACION ORDINARIA", tipocalificacion))
+data <- mutate(data, tipocalificacion = ifelse(substr(tipocalificacion, start = 1, stop = 30)== "ORDIANARIA", "EVALUACION ORDINARIA", tipocalificacion))
+data <- mutate(data, tipocalificacion = ifelse(substr(tipocalificacion, start = 1, stop = 30)== "EVALIACIONORDINARIA", "EVALUACION ORDINARIA", tipocalificacion))
+data <- mutate(data, tipocalificacion = ifelse(substr(tipocalificacion, start = 1, stop = 30)== "CURSOAPROBADO", "EVALUACION ORDINARIA", tipocalificacion))
+data <- mutate(data, tipocalificacion = ifelse(substr(tipocalificacion, start = 1, stop = 30)== "EXTRAESCOLAR", "EVALUACION ORDINARIA", tipocalificacion))
+distinct(select(data, tipocalificacion))
+
+data <- mutate(data, tipocalificacion = ifelse(substr(tipocalificacion, start = 1, stop = 30)== "EVALUACIONCOMPLEMENTARIA", "EVALUACION COMPLEMENTARIA", tipocalificacion))
+data <- mutate(data, tipocalificacion = ifelse(substr(tipocalificacion, start = 1, stop = 30)== "REPETICIONCOMPLEMENTARIA", "EVALUACION COMPLEMENTARIA", tipocalificacion))
+data <- mutate(data, tipocalificacion = ifelse(substr(tipocalificacion, start = 1, stop = 30)== "CURSOESPECIAL", "EVALUACION COMPLEMENTARIA", tipocalificacion))
+data <- mutate(data, tipocalificacion = ifelse(substr(tipocalificacion, start = 1, stop = 30)== "REPETICIÓNORDINARIA", "EVALUACION COMPLEMENTARIA", tipocalificacion))
+data <- mutate(data, tipocalificacion = ifelse(substr(tipocalificacion, start = 1, stop = 30)== "REPETICIONORDINARIA", "EVALUACION COMPLEMENTARIA", tipocalificacion))
+data <- mutate(data, tipocalificacion = ifelse(substr(tipocalificacion, start = 1, stop = 30)== "COMPLEMENTARIA", "EVALUACION COMPLEMENTARIA", tipocalificacion))
+data <- mutate(data, tipocalificacion = ifelse(substr(tipocalificacion, start = 1, stop = 30)== "EVALUACIÓNCOMPLEMENTARIA", "EVALUACION COMPLEMENTARIA", tipocalificacion))
+data <- mutate(data, tipocalificacion = ifelse(substr(tipocalificacion, start = 1, stop = 30)== "EVALIACIONCOMPLEMENTARIA", "EVALUACION COMPLEMENTARIA", tipocalificacion))
+data <- mutate(data, tipocalificacion = ifelse(substr(tipocalificacion, start = 1, stop = 30)== "ESPECIAL", "EVALUACION COMPLEMENTARIA", tipocalificacion))
+distinct(select(data, tipocalificacion))
+data <- mutate(data, tipocalificacion = ifelse(substr(tipocalificacion, start = 1, stop = 30)== "CURSOREPROBADO", "EVALUACION COMPLEMENTARIA", tipocalificacion))
+distinct(select(data, tipocalificacion))
+
+```
+
+```{r}
+#Quitar espacios
+data <- mutate(data, clavemateria = gsub(" ","",clavemateria))
+#Quitar guión
+data <- mutate(data, clavemateria = gsub("-","",clavemateria))
+#Converitr a Mayusuculas clavemateria
+data <- mutate(data, clavemateria = toupper(clavemateria))
+arrange(distinct(select(data, clavemateria)))
+
+
+
+```
+
+```{r}
+#Converitr a Mayusuculas materia
+data <- mutate(data, materia = toupper(materia))
+
+data <- mutate(data, materia = ifelse(substr(materia, start = 1, stop = 30)== "FUND. INGENIERIA DE SOFTWARE", "FUNDAMENTOS DE INGENIERIA DE SOFTWARE", materia))
+arrange(distinct(select(data, materia)))
+data <- mutate(data, materia = ifelse(substr(materia, start = 1, stop = 50)== "FUNDAMENTOS DE INGENIERÍA DE SOFTWARE", "FUNDAMENTOS DE INGENIERIA DE SOFTWARE", materia))
+data <- mutate(data, materia = ifelse(substr(materia, start = 1, stop = 50)== " FUNDAMENTOS DE INGENIERIA DE SOFTWARE", "FUNDAMENTOS DE INGENIERIA DE SOFTWARE", materia))
+arrange(distinct(select(data, materia)))
+```
+
+```{r}
+#Agregar columna aprobado
+data <- mutate(data, aprobado = ifelse(calificacion<70, "NO APROBADO", "APROBADO"))
+
+#Sacar promedio por materia
+data <- mutate(group_by(data, clavemateria), promedio.materia = round(mean(calificacion),2))
+
+#Sacar promedio por semestre
+data <- mutate(group_by(data, semestre), promedio.semestre = round(mean(calificacion),2))
+
+#Sacar promedio por semestre y materia
+data <- mutate(group_by(data, clavemateria, semestre), promedio.materia.semestre = round(mean(calificacion),2))
+
+#Convertir columna calificacion a Entero.
+data <- mutate(data, calificacion= as.integer(calificacion))
+
+
+theme_lab <- function () { 
+  theme_grey(base_size = 14, base_family = "sans") %+replace% 
+    theme(
+      # plot margin
+      plot.margin = unit(rep(0.5, 4), "cm"),
+      # plot background and border
+      plot.background = element_blank(),
+      panel.background = element_blank(),
+      panel.border = element_blank(),
+      # grid lines
+      panel.grid.major.x = element_blank(),
+      panel.grid.major.y = element_line(size = 0.5, color = "#cbcbcb"), 
+      panel.grid.minor = element_blank(),
+      # axis ticks and lines
+      axis.ticks = element_blank(),
+      axis.line = element_blank(),
+      # title, subtitle and caption
+      plot.title = element_text(size = 20, face = "bold", colour = "#757575", hjust = 0),
+      plot.subtitle = element_text(size = 16, colour = "#757575", hjust = 0, margin = margin(9, 0, 9, 0)),
+      plot.caption = element_text(size = 10, color = "grey50", hjust = 1, margin = margin(t = 15)),
+      # axes titles
+      axis.title = element_text(colour = "#757575", hjust = 1),
+      axis.text.x = element_text(margin = margin(b = 7)),
+      axis.text.y = element_text( margin = margin(l = 7)),
+      # legend
+      legend.position = "top",
+      legend.background = element_blank(),
+      legend.key = element_blank(),
+      legend.title = element_text(size = 12, colour = "#757575"),
+      legend.text.align = 0,
+      legend.text = element_text(size = 14, colour = "#757575"),
+      # facetting
+      strip.background = element_rect(fill = "transparent", colour = NA),
+      strip.text = element_text(size = 12, face = "bold", colour = "#757575", hjust = 0)
+    )
+}
+
+promedioMateria <- arrange(distinct(select(data, clavemateria, promedio.materia)), promedio.materia, clavemateria)
+promedioMateria <- promedioMateria[1:5,]
+promedioMateria
+
+grfc.promedioMateria <- ggplot(promedioMateria)
+
+grfc.promedioMateria <- grfc.promedioMateria + aes(promedioMateria$clavemateria, promedioMateria$promedio.materia)
+
+grfc.promedioMateria <-grfc.promedioMateria + geom_col() + xlab("Asignaturas") + ylab("Promedio") + ggtitle( "Asignaturas con el promedio mas bajo") + theme_lab()
+
+grfc.promedioMateria
+```
+
+
+
+Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
+
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Ctrl+Shift+K* to preview the HTML file).
+
+The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
