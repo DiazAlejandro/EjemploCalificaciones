@@ -262,6 +262,33 @@ grfc.promedioMateria <-grfc.promedioMateria + geom_col() + xlab("Asignaturas") +
 grfc.promedioMateria
 ```
 
+```{r}
+#Grupos de datos y columnas
+#PROMEDIO DE SEMESTRE
+promediosemestre <- summarise(group_by(data, semestre) ,promedio.semestre = mean(calificacion)) 
+promediosemestre
+
+grfc2.promediosemestre <- ggplot(promediosemestre)
+
+grfc2.promediosemestre <- grfc2.promediosemestre+ aes(promediosemestre$semestre, promediosemestre$promedio.semestre)
+
+grfc2.promediosemestre <- grfc2.promediosemestre + geom_col() + xlab("Semestre") + ylab("Promedio Semestre") + ggtitle( "Asignaturas con el promedio mas bajo") + theme_lab()
+
+grfc2.promediosemestre
+
+
+#Promedios de las materias por semestre
+promediosemestremateria <- data %>% group_by(clavemateria, semestre) %>% summarise(promedio.semestre.materia = mean(calificacion))
+promediosemestremateria
+
+grfc2.promediosemestremateria <- ggplot(promediosemestremateria)
+
+grfc2.promediosemestremateria <- grfc2.promediosemestremateria+ aes(promediosemestremateria$semestre, promediosemestremateria$promedio.semestre.materia)
+
+grfc2.promediosemestremateria <- grfc2.promediosemestremateria + geom_col() + xlab("Semestre") + ylab("Promedio Semestre") + ggtitle( "Asignaturas con el promedio mas bajo") + theme_lab()
+
+grfc2.promediosemestremateria
+```
 
 
 Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
