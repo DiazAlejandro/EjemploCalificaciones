@@ -25,6 +25,8 @@ distinct(select(data, semestre))
 data <- mutate(data, semestre = ifelse(substr(semestre, start = 1, stop = 5)== "20209", "20203", semestre))
 #Modificar 20219 por 20213
 data <- mutate(data, semestre = ifelse(substr(semestre, start = 1, stop = 5)== "20219", "20213", semestre))
+#Modificar 21203 por 20203
+data <- mutate(data, semestre = ifelse(substr(semestre, start = 1, stop = 5)== "21203", "20203", semestre))
 
 distinct(select(data, tipocurso))
 #Quitar espacios
@@ -283,13 +285,49 @@ promediosemestremateria
 
 grfc2.promediosemestremateria <- ggplot(promediosemestremateria)
 
-grfc2.promediosemestremateria <- grfc2.promediosemestremateria+ aes(promediosemestremateria$semestre, promediosemestremateria$promedio.semestre.materia)
+grfc2.promediosemestremateria <- grfc2.promediosemestremateria + aes(semestre, promedio.semestre.materia, color = clavemateria)
 
-grfc2.promediosemestremateria <- grfc2.promediosemestremateria + geom_col() + xlab("Semestre") + ylab("Promedio Semestre") + ggtitle( "Asignaturas con el promedio mas bajo") + theme_lab()
+grfc2.promediosemestremateria <- grfc2.promediosemestremateria + geom_point()
 
 grfc2.promediosemestremateria
 ```
 
+```{r}
+#Graficar aprobados y no aprobados de las materias
+datos.grafica <- select (data, clavemateria, aprobado)
+
+grafica2 <- ggplot(datos.grafica)
+grafica2 <- grafica2 + aes(clavemateria, fill = aprobado)
+grafica2 <- grafica2 + geom_bar()
+grafica2
+
+```
+
+
+```{r}
+datos.grafica3 <- select (data, clavemateria, aprobado)
+
+grafica3 <- ggplot(datos.grafica3)
+grafica3 <- grafica3 + aes(clavemateria, color = aprobado)
+grafica3 <- grafica3 + geom_bar()
+grafica3
+```
+```{r librerias}
+   base
+
+```
+
+```{r}
+#Grafica distinta por cada semestre
+datos.grafica4 <- select (data, clavemateria, aprobado, semestre)
+
+grafica4 <- ggplot(datos.grafica4)
+grafica4 <- grafica4 + aes(clavemateria, color = aprobado)
+grafica4 <- grafica4 + xlab("Materia") + ylab("Cantidad de estudiantes") + ggtitle("Proporción de estudiantes aprobados vs No. aprobados", subtitle = "Sistemas")
+grafica4 <- grafica4 + geom_bar() + facet_wrap(~semestre)
+grafica4
+
+```
 
 Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
 
