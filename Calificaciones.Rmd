@@ -312,6 +312,7 @@ grafica3 <- grafica3 + aes(clavemateria, color = aprobado)
 grafica3 <- grafica3 + geom_bar()
 grafica3
 ```
+
 ```{r librerias}
    base
 
@@ -328,6 +329,20 @@ grafica4 <- grafica4 + geom_bar() + facet_wrap(~semestre)
 grafica4
 
 ```
+
+```{r}
+datos.materia <- data %>% filter(no_ctrl == "18161110")
+porcentaje_materia <- datos.materia %>%
+  group_by(aprobado) %>%
+  count() %>%
+  ungroup() %>%
+  mutate(por = `n`/sum(`n`)*100)
+porcentaje_materia
+
+ggplot(data = porcentaje_materia, aes(x=1 , y=por, fill= aprobado)) + geom_bar(stat = "identity") + geom_text(aes(label = paste0(round(por,1), "%")), position = position_stack(vjust = .5)) + coord_polar(theta = "y") + theme_void()
+
+```
+
 
 Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
 
