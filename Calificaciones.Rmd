@@ -341,6 +341,149 @@ porcentaje_materia
 
 ggplot(data = porcentaje_materia, aes(x=1 , y=por, fill= aprobado)) + geom_bar(stat = "identity") + geom_text(aes(label = paste0(round(por,1), "%")), position = position_stack(vjust = .5)) + coord_polar(theta = "y") + theme_void()
 
+```       
+
+```{r}
+#Grafica para conocer las calificacioes que más tienen los estudiantes por semestre
+datos.modacal <- data %>% filter(semestre == "20201" | semestre == "20203" | semestre == "20211" | semestre == "20213")
+datos.grafica7 <- select(datos.modacal, clavemateria, calificacion, semestre) 
+graficacalf <- ggplot(datos.grafica7)
+graficacalf <- graficacalf + aes(calificacion)
+graficacalf <- graficacalf + xlab("Calificaciones") + ylab("Cantidad de alumnos") + ggtitle("Calificaciones más repetidas")
+graficacalf <- graficacalf + geom_histogram(color = "white") + facet_wrap(semestre ~ .)
+graficacalf
+  
+#OPCION 2
+ggplot(datos.grafica7, aes(calificacion) ) +
+  geom_histogram(color = "white") +
+  facet_wrap(semestre ~ .) +
+  xlab("Calificaciones") + ylab("Cantidad de alumnos") + ggtitle("Calificaciones más repetidas")
+```
+```{r}
+#Grafica para conocer que calificación es la que tienen más los estudiantes
+datos.grafica8 <- select(data, clavemateria, calificacion, semestre) 
+graficamest <- ggplot(datos.grafica8)
+graficamest <- graficamest + aes(calificacion)
+graficamest <- graficamest + xlab("Calificaciones") + ylab("Cantidad de alumnos") + ggtitle("Calificaciones más repetidas")
+graficamest <- graficamest + geom_histogram(color = "white")
+graficamest
+
+#Opcion 2
+ggplot(datos.grafica8, aes(calificacion) ) +
+  geom_histogram(color = "white")
+
+```
+
+```{r}
+#Grafica para conocer las calificacioes que más tienen los estudiantes por semestre
+datos.modacal <- data %>% filter(semestre == "20201" | semestre == "20203" | semestre == "20211" | semestre == "20213")
+datos.grafica10 <- select(datos.modacal, clavemateria, aprobado, semestre) 
+graficaIncidencias <- ggplot(datos.grafica10)
+graficaIncidencias <- graficaIncidencias + aes(semestre, aprobado)
+graficaIncidencias <- graficaIncidencias + geom_jitter() + ggtitle("Calificaciones más repetidas")
+graficaIncidencias
+
+#Opcion 2
+ggplot(datos.grafica10, aes(semestre, aprobado) ) + geom_jitter()
+```
+
+```{r}
+#Joselyne
+datos.grafica11 <- select(data, clavemateria, aprobado, semestre, calificacion) 
+datos.grafica11
+ggplot(datos.grafica11, aes(clavemateria, calificacion) ) +
+  geom_jitter()
+```
+
+
+```{r}
+#Cantidad de reprobados por materia
+  datos.reprobado <- data %>% filter(aprobado == "NO APROBADO")
+  datos.grafica12 <- select(datos.reprobado, clavemateria, aprobado, semestre, tipocalificacion, materia)
+  graftipoev <- ggplot(datos.grafica12)
+  graftipoev <- graftipoev +  aes(semestre, clavemateria, label = as.character(tipocalificacion))
+  graftipoev <- graftipoev + geom_text(size = 3) + ggtitle("Calificaciones más repetidas")
+  graftipoev
+  
+  #Opcion 2
+  ggplot(datos.grafica12,
+    aes(semestre, clavemateria, label = as.character(tipocalificacion))) +
+    geom_text(size = 3)
+  
+  
+  ggplot(datos.grafica12, aes(materia)) +
+  geom_bar(color = "white") + theme(axis.text.x=element_text(angle=45, hjust=1))
+```
+```{r}
+#Ciencias básicas
+datos.cb <- data %>% filter(clavemateria == "ACF0905" | clavemateria == "ACF0901" | clavemateria == "ACF0902" | clavemateria == "ACF0903" | clavemateria == "ACF0904")
+datos.cb
+datos.grafica13 <- select(datos.cb, clavemateria, aprobado, semestre, calificacion, promedio.materia) 
+datos.grafica13
+ggplot(datos.grafica13, aes(semestre, calificacion), 
+  size=2, position = position_jitter(x = 2,y = 2) ) +
+  geom_jitter(colour=alpha("black",0.75) )
+
+              
+```
+
+```{r}
+#Gráfica para mostrar la tendencia de calificaciones 
+datos.s20 <- data %>% filter(semestre == "20201")
+graftTenCalf <- ggplot(datos.s20)
+graftTenCalf <- graftTenCalf + aes(calificacion, promedio.materia)
+graftTenCalf <- graftTenCalf + geom_point() + geom_smooth() + xlab("Calificaciones") + ylab("Promedio") + ggtitle("Tendencia en calificaciones - SEMESTRE 20201")
+graftTenCalf
+
+#Opcion 2
+ggplot(datos.s20, aes(calificacion, promedio.materia)) +
+    geom_point() + geom_smooth()
+```
+```{r}
+datos.venanos <- data %>% filter(semestre == "20202" | semestre == "20212" | semestre == "20192")
+gftenver <- ggplot(datos.venanos)
+gftenver <- gftenver + aes(calificacion, promedio.materia.semestre)
+gftenver <- gftenver + geom_smooth() + geom_point() + facet_grid(semestre ~ .) + xlab("Calificacion") + ylab("Promedio semestral") + ggtitle("Tendencia en calificaciones - VERANOS")
+gftenver
+
+
+ggplot(datos.venanos, aes(calificacion, promedio.materia.semestre)) +
+    geom_smooth() +
+  geom_point() +
+  facet_grid(semestre ~ .)
+```
+
+```{r}
+datos.sem20 <- data %>% filter(semestre == "20201" | semestre == "20203")
+datos.grafica15 <- select (datos.sem20, clavemateria, aprobado)
+ggplot(datos.grafica15, aes(semestre, fill=aprobado ) ) +
+  geom_bar(position="dodge")
+
+```
+```{r}
+#Grafica para mostrar la cnatidad de tipos de cursos por semestre
+datos.tipocu <- data %>% filter(semestre == "20201" | semestre == "20202" | semestre == "20203" | semestre == "20211" | semestre == "20212" | semestre == "20213")
+datos.grafica15 <- select (datos.tipocu, clavemateria, tipocurso)
+
+
+graftipc <- ggplot(datos.grafica15)
+graftipc <- graftipc + aes(semestre, fill=tipocurso)
+graftipc <- graftipc + geom_bar(position="dodge") + xlab("Semestre") + ylab("Cantidad de alumnos") + ggtitle("Cantidad de tipos de curso en el año 2020 y 2021")
+graftipc
+
+
+ggplot(datos.grafica15, aes(semestre, fill=tipocurso ) ) +
+  geom_bar(position="dodge")
+```
+```{r}
+#5 materias más cursadas por semestre
+datos.mascur <- data %>% filter(semestre == "20201")
+datos.grafica16 <- select (datos.mascur, clavemateria, semestre, materia)
+datos.grafica16 <- order(datos.grafica16)
+datos.grafica16 <- datos.grafica16[1:5,]
+ggplot(datos.grafica16, aes(semestre, fill=materia ) ) +
+  geom_bar(position="dodge")
+
 ```
 
 
